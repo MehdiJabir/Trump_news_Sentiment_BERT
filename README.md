@@ -24,7 +24,7 @@ It demonstrates a full end-to-end system — from **data ingestion** to **visual
 ```mermaid
 graph TD
 A[News API] --> B[Kafka + Zookeeper]
-B --> C[Sentiment Consumers (Python + VADER)]
+B --> C[Sentiment Consumers]
 C --> D[Elasticsearch]
 D --> E[Kibana Dashboard]
 subgraph Dockerized Environment
@@ -49,20 +49,20 @@ end
 
 ---
 
-## 🧠 Core Features
+##  Core Features
 
 | Feature | Description |
 |:---------|:-------------|
-| 📰 **Real-Time News Ingestion** | Fetches breaking Trump-related articles via News API. |
-| ⚡ **Kafka Streaming** | Streams data in real-time for scalable processing. |
-| 💬 **VADER Sentiment Analysis** | Analyzes article tone as positive, negative, or neutral. |
-| 🔍 **Elasticsearch Indexing** | Stores enriched data for fast search and analytics. |
-| 📊 **Kibana Dashboards** | Visualizes trends, sentiment distribution, and word clouds. |
-| 🐳 **Dockerized Deployment** | Ensures reproducibility and easy multi-container setup. |
+|  **Real-Time News Ingestion** | Fetches breaking Trump-related articles via News API. |
+|  **Kafka Streaming** | Streams data in real-time for scalable processing. |
+|  **VADER Sentiment Analysis** | Analyzes article tone as positive, negative, or neutral. |
+|  **Elasticsearch Indexing** | Stores enriched data for fast search and analytics. |
+|  **Kibana Dashboards** | Visualizes trends, sentiment distribution, and word clouds. |
+|  **Dockerized Deployment** | Ensures reproducibility and easy multi-container setup. |
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |:------|:------------|
@@ -76,7 +76,7 @@ end
 
 ---
 
-## 🧩 Pipeline Components
+##  Pipeline Components
 
 ### **Producer.py**
 - Fetches latest Trump-related articles via News API.
@@ -99,32 +99,21 @@ end
 - Builds a frequency index for **word cloud generation** in Kibana.
 
 ---
-
-## 🖥️ Visualization & Demo
-
-You can include a **demo image or GIF** of your dashboard here 👇  
-(just replace the link with your uploaded image on GitHub)
-
-### 🖼️ Dashboard Preview
+### Dashboard Previe
 ![Kibana Dashboard Demo](assets/demo-dashboard.png)
 *Example: Real-time sentiment and keyword analysis in Kibana.*
-
-> 💡 Tip: Place your image inside an `assets/` or `images/` folder in your repo, then use relative path like `![Demo](assets/demo.png)`.
-
-If you have a **screen recording**, you can embed a link here:  
-🎥 [Watch Demo Video](#)
 
 ---
 
 ## 💻 Installation & Setup
 
-### 1️⃣ Clone Repository
+###  Clone Repository
 ```bash
-git clone https://github.com/yourusername/trump-news-sentiment-pipeline.git
+git clone https://github.com/homunculus86/twitter_tarrifs_analysis
 cd trump-news-sentiment-pipeline
 ```
 
-### 2️⃣ Configure Environment
+###  Configure Environment
 Create a `.env` file:
 ```
 NEWS_API_KEY=your_newsapi_key
@@ -132,12 +121,9 @@ ELASTIC_HOST=http://localhost:9200
 KAFKA_BROKER=localhost:9092
 ```
 
-### 3️⃣ Start the Dockerized Pipeline
-```bash
-docker-compose up --build
-```
+###  Start the Dockerized Pipeline
 
-### 4️⃣ Access the Interfaces
+###  Access the Interfaces
 | Service | URL |
 |:--------|:----|
 | **Kibana Dashboard** | http://localhost:5601 |
@@ -146,7 +132,7 @@ docker-compose up --build
 
 ---
 
-## 📊 Example Output
+## Example Output
 
 **Sample Sentiment Scores (from VADER):**
 
@@ -158,22 +144,22 @@ docker-compose up --build
 
 ---
 
-## 🧪 Key Highlights
+##  Key Highlights
 
-✅ Real-time **NLP sentiment classification**  
-✅ End-to-end **data engineering pipeline**  
-✅ Modular & **containerized architecture**  
-✅ Interactive **Kibana dashboards**  
-✅ Scalable and **production-ready** design  
+ Real-time **NLP sentiment classification**  
+ End-to-end **data engineering pipeline**  
+ Modular & **containerized architecture**  
+ Interactive **Kibana dashboards**  
+ Scalable and **production-ready** design  
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
-- 🤖 Integrate **transformer-based sentiment models** (e.g., BERT, RoBERTa).  
-- 📦 Add **MongoDB or PostgreSQL** for historical archiving.  
-- 🧱 Include **alerting system** for sentiment spikes.  
-- 🕸️ Expand to multiple political entities or keywords.  
+-  Integrate **transformer-based sentiment models** (e.g., BERT, RoBERTa).  
+-  Add **MongoDB or PostgreSQL** for historical archiving.  
+-  Include **alerting system** for sentiment spikes.  
+-  Expand to multiple political entities or keywords.  
 
 ---
 
@@ -182,14 +168,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🌟 Acknowledgments
 
-Special thanks to:
-- **News API** for live data streams  
-- **Apache Kafka** for distributed streaming  
-- **Elasticsearch & Kibana** for analytics  
-- **Docker** for seamless deployment  
 
----
-
-> _"Turning real-time data into real-time insight — powered by AI and modern data engineering."_
