@@ -99,7 +99,7 @@ end
 - Builds a frequency index for **word cloud generation** in Kibana.
 
 ---
-### Dashboard Previe
+### Dashboard Preview
 ![Kibana Dashboard Demo](https://github.com/homunculus86/twitter_tarrifs_analysis/blob/58ad90a9b50e9e493944bb4f00a3de96a94d9e6e/kibana_demp.png)
 *Example: Real-time sentiment and keyword analysis in Kibana.*
 
@@ -110,7 +110,7 @@ end
 ###  Clone Repository
 ```bash
 git clone https://github.com/homunculus86/twitter_tarrifs_analysis
-cd trump-news-sentiment-pipeline
+cd twitter_tarrifs_analysis
 ```
 
 ###  Configure Environment
