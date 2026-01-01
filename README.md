@@ -23,7 +23,7 @@ It demonstrates a full end-to-end system — from **data ingestion** to **visual
 
 ```mermaid
 graph TD
-A[News API] --> B[Sentiment Producers] ---> C[Kafka + Zookeeper]
+A[News API] --> B[News Producers] ---> C[Kafka + Zookeeper]
 C --> D[Sentiment Consumers]
 D --> E[Elasticsearch]
 E --> F[Kibana Dashboard]
