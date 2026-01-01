@@ -23,16 +23,17 @@ It demonstrates a full end-to-end system — from **data ingestion** to **visual
 
 ```mermaid
 graph TD
-A[News API] --> B[Kafka + Zookeeper]
-B --> C[Sentiment Consumers]
-C --> D[Elasticsearch]
-D --> E[Kibana Dashboard]
+A[News API] --> B[Sentiment Producers] ---> C[Kafka + Zookeeper]
+C --> D[Sentiment Consumers]
+D --> E[Elasticsearch]
+E --> F[Kibana Dashboard]
 subgraph Dockerized Environment
 A
 B
 C
 D
 E
+F
 end
 ```
 
