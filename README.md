@@ -108,8 +108,8 @@ end
 
 ###  Clone Repository
 ```bash
-git clone https://github.com/homunculus86/twitter_tarrifs_analysis
-cd twitter_tarrifs_analysis
+git clone https://https://github.com/MehdiJabir/Trump_news_Sentiment_BERT/
+cd Trump_news_Sentiment_BERT
 ```
 
 ###  Configure Environment
