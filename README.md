@@ -23,16 +23,17 @@ It demonstrates a full end-to-end system — from **data ingestion** to **visual
 
 ```mermaid
 graph TD
-A[News API] --> B[Kafka + Zookeeper]
-B --> C[Sentiment Consumers]
-C --> D[Elasticsearch]
-D --> E[Kibana Dashboard]
+A[News API] --> B[News Producers] ---> C[Kafka + Zookeeper]
+C --> D[Sentiment Consumers]
+D --> E[Elasticsearch]
+E --> F[Kibana Dashboard]
 subgraph Dockerized Environment
 A
 B
 C
 D
 E
+F
 end
 ```
 
@@ -41,7 +42,7 @@ end
 2. **Streaming:** Push data into Apache Kafka for real-time processing.  
 3. **Processing:**  
    - *Consumer 1:* Indexes news articles into Elasticsearch.  
-   - *Consumer 2:* Performs sentiment analysis using **VADER NLP**.  
+   - *Consumer 2:* Performs sentiment analysis using **BERT**.  
    - *Consumer 3:* Generates word frequency indices for word clouds.  
 4. **Storage:** Store enriched data (sentiment, metadata) in **Elasticsearch**.  
 5. **Visualization:** Interactive dashboards in **Kibana**.  
@@ -55,7 +56,7 @@ end
 |:---------|:-------------|
 |  **Real-Time News Ingestion** | Fetches breaking Trump-related articles via News API. |
 |  **Kafka Streaming** | Streams data in real-time for scalable processing. |
-|  **VADER Sentiment Analysis** | Analyzes article tone as positive, negative, or neutral. |
+|  **BERT Sentiment Analysis** | Analyzes article tone as positive, negative, or neutral. |
 |  **Elasticsearch Indexing** | Stores enriched data for fast search and analytics. |
 |  **Kibana Dashboards** | Visualizes trends, sentiment distribution, and word clouds. |
 |  **Dockerized Deployment** | Ensures reproducibility and easy multi-container setup. |
@@ -69,7 +70,7 @@ end
 | **Data Source** | [News API](https://newsapi.org) |
 | **Data Streaming** | Apache Kafka + Zookeeper |
 | **Data Processing** | Python (Producers & Consumers) |
-| **Sentiment Analysis** | VADER (NLTK) |
+| **Sentiment Analysis** | BERT (transormers) |
 | **Storage & Search** | Elasticsearch |
 | **Visualization** | Kibana |
 | **Containerization** | Docker & Docker Compose |
@@ -87,10 +88,9 @@ end
 - Indexes raw news articles into Elasticsearch.
 
 ### **Consumer 2 – Sentiment Processor**
-- Applies VADER sentiment analysis.
+- Applies BERT for sentiment analysis.
 - Enriches each article with:
   - Polarity score (positive/neutral/negative)
-  - Confidence level
   - Source metadata
 
 ### **Consumer 3 – Word Indexer**
@@ -109,8 +109,8 @@ end
 
 ###  Clone Repository
 ```bash
-git clone https://github.com/homunculus86/twitter_tarrifs_analysis
-cd twitter_tarrifs_analysis
+git clone https://https://github.com/MehdiJabir/Trump_news_Sentiment_BERT/
+cd Trump_news_Sentiment_BERT
 ```
 
 ###  Configure Environment

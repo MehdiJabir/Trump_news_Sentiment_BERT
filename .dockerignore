@@ -1,0 +1,12 @@
+# Ignore the virtual environment (This is the huge 2GB folder)
+venv/
+
+# Ignore git history
+.git/
+
+# Ignore cache
+__pycache__/
+*.pyc
+
+# Ignore secrets (Docker Compose reads these, they don't need to be baked into the image)
+.env

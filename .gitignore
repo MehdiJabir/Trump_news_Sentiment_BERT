@@ -1,0 +1,12 @@
+# Secrets
+.env
+venv/
+__pycache__/
+
+# Heavy Models (Do not commit these!)
+bert_sentiment_model/
+*.h5
+*.pickle
+
+# System junk
+.DS_Store

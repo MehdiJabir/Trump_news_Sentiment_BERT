@@ -1,121 +1,67 @@
-from elasticsearch import Elasticsearch
-import json
-from collections import Counter
+import os
+import time
 import re
-
+from elasticsearch import Elasticsearch
+from collections import Counter
 
 class WordCloudProcessor:
     def __init__(self):
-        self.es = Elasticsearch(["http://localhost:9200"])
+        es_host = os.getenv('ELASTIC_HOST', 'elasticsearch:9200')
+        self.es = Elasticsearch([es_host])
+
+    def wait_for_elastic(self):
+        print("⏳ Word Cloud waiting for Elasticsearch...")
+        while True:
+            try:
+                if self.es.ping():
+                    print("✅ Word Cloud connected to Elasticsearch!")
+                    break
+            except Exception:
+                pass
+            time.sleep(5)
 
     def extract_words_from_titles(self):
-        # Get all documents
+        # Gracefully handle if the index doesn't exist yet (no news yet)
+        if not self.es.indices.exists(index="trump-news-index"):
+            return {}
+
         response = self.es.search(
             index="trump-news-index", body={"size": 1000, "_source": ["title"]}
         )
 
         all_words = []
         stop_words = {
-            "the",
-            "and",
-            "or",
-            "but",
-            "in",
-            "on",
-            "at",
-            "to",
-            "for",
-            "of",
-            "with",
-            "by",
-            "a",
-            "an",
-            "is",
-            "after",
-            "are",
-            "was",
-            "were",
-            "be",
-            "been",
-            "have",
-            "has",
-            "had",
-            "do",
-            "does",
-            "did",
-            "will",
-            "would",
-            "could",
-            "should",
-            "may",
-            "might",
-            "must",
-            "can",
-            "cant",
-            "wont",
-            "dont",
-            "doesnt",
-            "didnt",
-            "isnt",
-            "arent",
-            "wasnt",
-            "werent",
-            "hasnt",
-            "havent",
-            "hadnt",
-            "this",
-            "that",
-            "these",
-            "those",
-            "i",
-            "you",
-            "he",
-            "she",
-            "it",
-            "we",
-            "they",
-            "me",
-            "him",
-            "her",
-            "us",
-            "them",
-            "my",
-            "your",
-            "his",
-            "its",
-            "our",
-            "their",
+            "the", "and", "or", "but", "in", "on", "at", "to", "for", "of", "with", 
+            "by", "a", "an", "is", "after", "trump", "donald", "says", "new", "us", "u.s."
         }
 
         for hit in response["hits"]["hits"]:
-            title = hit["_source"]["title"].lower()
-            # Remove punctuation and split into words
+            title = hit["_source"].get("title", "").lower()
             words = re.findall(r"\b[a-zA-Z]{3,}\b", title)
-            # Filter out stop words
             words = [word for word in words if word not in stop_words]
             all_words.extend(words)
 
-        # Count word frequencies
-        word_counts = Counter(all_words)
+        return Counter(all_words)
 
-        print("Top 20 words in headlines:")
-        for word, count in word_counts.most_common(20):
-            print(f"{word}: {count}")
-
-        return word_counts
-
-    def create_word_documents(self):
-        word_counts = self.extract_words_from_titles()
-
-        # Create new documents for each word
-        for word, count in word_counts.items():
-            doc = {"word": word, "count": count, "word_length": len(word)}
-
-            self.es.index(index="trump-words-index", body=doc)
-
-        print(f"Created {len(word_counts)} word documents in trump-words-index")
-
+    def run(self):
+        self.wait_for_elastic()
+        print("☁️ Word Cloud Processor Started...")
+        
+        while True:
+            try:
+                word_counts = self.extract_words_from_titles()
+                if word_counts:
+                    for word, count in word_counts.most_common(50):
+                        doc = {"word": word, "count": count}
+                        self.es.index(index="trump-words-index", body=doc)
+                    print(f"✅ Updated Cloud: {len(word_counts)} unique words found.")
+                else:
+                    print("⏳ Waiting for data to arrive in 'trump-news-index'...")
+            except Exception as e:
+                print(f"⚠️ Error: {e}")
+            
+            time.sleep(60) # Update every 1 minute
 
 if __name__ == "__main__":
     processor = WordCloudProcessor()
-    processor.create_word_documents()
+    processor.run()

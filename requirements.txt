@@ -1,0 +1,11 @@
+kafka-python
+elasticsearch<8.0.0
+requests
+nltk
+numpy
+pandas
+tensorflow-cpu
+transformers
+torch --index-url https://download.pytorch.org/whl/cpu
+python-dotenv
+tf-keras
